@@ -1,0 +1,14 @@
+# 本机约定（与 dsh-time-awareness 同款，2026-09-26 立）：禁止把 peerDependencies 装成真实副本。
+#
+# 两个作用：
+# 1. 本目录因此成为**自己的 workspace 根**——否则 pnpm 会向上认领 E:\alice 的 workspace，
+#    一次 install 就动到宿主依赖树。
+# 2. `autoInstallPeers: false`：插件的 peer 范围（如 @deepseek-ai/dsh-system-prompt 的
+#    ^0.1.0-rc.7）**匹配不到**工作区版本 0.1.7-rc.x（semver 预发布规则），pnpm 会从 registry
+#    拉回别的 rc 落到 node_modules/@deepseek-ai ⇒ **遮蔽宿主链接层**。
+#    关掉后，`@deepseek-ai/*` 由 Node/TS 向上解析到 E:\alice\node_modules\@deepseek-ai（宿主真源）。
+#
+# ⚠️ 不要用 .npmrc：pnpm 11.7.0 已不从 .npmrc 读取该设置，必须在 pnpm-workspace.yaml 里
+#    用 camelCase 的 autoInstallPeers。实验矩阵见
+#    E:\alice\reports\dsh-升级-0.1.7-rc.2-2026-09-26.md 第 4.2 节。
+autoInstallPeers: false
