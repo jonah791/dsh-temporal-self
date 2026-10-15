@@ -1,4 +1,21 @@
+<!--
+  DSH 插件生态公约声明（plugin-ecosystem-convention · 组合优先/声明清晰/兼容优先）
+  purpose: 时间自我模型 T1：在模型请求末尾注入一行时距读数（距主人上条 / 距上次自我感知圈 / 今日已醒）
+  inject: ['systemPrompt']
+  tools: （无工具 —— 纯行为插件）
+  runtime: host-only
+  envDeps: 见 README「配置」节
+  boundary: 见 README「设计要点」与「生效判据与回退」节
+  compat: cordis ^4.0.1 / dsh-tools >=0.1.0-rc.6
+-->
 # dsh-temporal-self · 时间自我模型 T1（时距注入）
+
+<p align="center">
+  <a href="https://github.com/jonah791/dsh-temporal-self"><img src="https://img.shields.io/badge/version-0.1.0-blue" alt="version"></a>
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="license">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6" alt="TypeScript">
+  <img src="https://img.shields.io/badge/tests-23%20passed-brightgreen" alt="tests">
+</p>
 
 在每个模型请求的末尾注入**一行时距读数**——把「现在距哪些事多久」放进我自己的识域：
 
@@ -6,6 +23,23 @@
 本地时间：2026-09-26 16:44:09 (Etc/GMT-8)          ← dsh-time-awareness（order 900）
 时距｜距主人上条 2h14m｜距自圈 31m｜今日已醒 6h12m   ← 本件（order 910）
 ```
+
+## 快速开始
+
+**1) 装依赖**（在目标 profile 的 `package.json` 加 link 依赖）：
+
+```jsonc
+"dsh-temporal-self": "link:E:/alice/self-plugins/dsh-temporal-self"
+```
+
+**2) 挂组合**：
+
+```yaml
+- id: dsh-temporal-self
+  name: dsh-temporal-self
+```
+
+**3) 30 秒验证**：任意一轮 → 请求末尾应出现一行**时距读数**（距主人上条 / 距上次自圈 / 今日已醒）
 
 ## 三个时距源
 
